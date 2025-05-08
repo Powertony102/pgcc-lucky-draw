@@ -8,7 +8,7 @@ from typing import List, Tuple
 
 from PyQt5.QtWidgets import (QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, 
                            QFrame, QMessageBox, QSplitter, QTableWidget,
-                           QTableWidgetItem, QHeaderView)
+                           QTableWidgetItem, QHeaderView, QFileDialog)
 from PyQt5.QtGui import QFont, QColor
 from PyQt5.QtCore import Qt, QTimer, pyqtSlot
 
@@ -137,6 +137,11 @@ class MainWindow(QMainWindow):
         self.reset_button = CustomButton("重置抽奖", panel, "neutral")
         self.reset_button.clicked.connect(self.reset_draw)
         layout.addWidget(self.reset_button)
+        
+        # 导入名单按钮
+        self.import_button = CustomButton("导入名单", panel, "neutral")
+        self.import_button.clicked.connect(self.import_participants)
+        layout.addWidget(self.import_button)
         
         # 帮助信息
         help_text = "提示: 点击'开始抽奖'后，系统将随机展示参与者，\n再点击'停止抽奖'确定本轮中奖人员。"
@@ -379,3 +384,16 @@ class MainWindow(QMainWindow):
             self.update_status()
             
             QMessageBox.information(self, "重置完成", "抽奖状态已重置")
+    
+    def import_participants(self):
+        """导入参与者名单"""
+        options = QFileDialog.Options()
+        file_path, _ = QFileDialog.getOpenFileName(self, "选择参与者名单", "", "CSV Files (*.csv);;All Files (*)", options=options)
+        if file_path:
+            try:
+                self.model.add_csv_path(file_path)
+                self.model.load_participants()
+                QMessageBox.information(self, "导入成功", "参与者名单已成功导入")
+                self.update_status()
+            except Exception as e:
+                QMessageBox.critical(self, "导入失败", f"导入过程中发生错误: {str(e)}")

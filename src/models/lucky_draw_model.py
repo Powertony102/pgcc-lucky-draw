@@ -24,6 +24,15 @@ class LuckyDrawModel:
         # 加载参与者数据
         self.load_participants()
     
+    def add_csv_path(self, csv_path: str) -> None:
+        """添加CSV文件路径
+        
+        Args:
+            csv_path: 参与者CSV文件路径
+        """
+        self.csv_path = csv_path
+        self.load_participants()
+    
     def load_participants(self) -> bool:
         """从CSV文件加载参与者数据
         
