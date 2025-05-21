@@ -3,7 +3,7 @@
 
 from PyQt5.QtWidgets import (QPushButton, QLabel, QVBoxLayout, QWidget, 
                             QFrame, QGraphicsDropShadowEffect, QSizePolicy,
-                            QSpinBox, QHBoxLayout, QGridLayout)
+                            QSpinBox, QHBoxLayout, QGridLayout, QComboBox)
 from PyQt5.QtGui import QFont, QColor, QCursor, QPalette, QBrush, QLinearGradient
 from PyQt5.QtCore import Qt, QPropertyAnimation, QSize, pyqtProperty, QEasingCurve
 

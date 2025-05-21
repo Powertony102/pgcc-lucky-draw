@@ -49,9 +49,9 @@ class LuckyDrawModel:
             if 'department' not in df.columns or 'name' not in df.columns:
                 return False
             
-            # 将数据转换为列表格式 [(department, name), ...]
             self.participants = list(zip(df['department'].tolist(), df['name'].tolist()))
             self.remaining = self.participants.copy()
+            
             return True
         except Exception as e:
             print(f"加载参与者数据出错: {e}")
@@ -81,12 +81,11 @@ class LuckyDrawModel:
             num_winners: 要抽取的获奖者数量
             
         Returns:
-            List[Tuple[str, str]]: 包含部门和姓名的获奖者列表
+            List[Tuple[str, str]]: 获奖者列表
         """
         if not self.can_draw(num_winners):
             return []
         
-        # 从剩余参与者中随机抽取
         current_winners = random.sample(self.remaining, num_winners)
         
         # 更新剩余参与者和获奖者列表

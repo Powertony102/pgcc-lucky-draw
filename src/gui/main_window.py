@@ -335,14 +335,9 @@ class MainWindow(QMainWindow):
         
         # 更新状态信息
         self.update_status()
-        
-        # 显示提示
-        if winners:
-            QMessageBox.information(self, "抽奖完成", 
-                                  f"第{self.model.current_round}轮抽奖完成，共抽出{len(winners)}人")
     
     def update_results_table(self, winners: List[Tuple[str, str]]):
-        """更新结果表格"""
+        """更新结果表格，修复UI问题：每轮抽奖后只插入本轮中奖者，避免重复或错位。"""
         for department, name in winners:
             row_position = self.results_table.rowCount()
             self.results_table.insertRow(row_position)
